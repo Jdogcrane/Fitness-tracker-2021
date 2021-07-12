@@ -2,7 +2,6 @@ const express = require("express");
 const mongoose = require("mongoose");
 
 const PORT = process.env.PORT || 3000
-
 const app = express();
 
 app.use(express.urlencoded({ extended: true }));
@@ -22,10 +21,6 @@ app.get('/exercise', (req, res) => {
 app.get('/stats', (req, res) => {
   res.sendFile(path.join(__dirname, '/public/stats.html' ))
 });
-
-// routes
-app.use(require("./routes/page-routes"));
-app.get(require("./routes/api-routes"));
 
 app.listen(PORT, () => {
   console.log(`App running on port ${PORT}!`);
