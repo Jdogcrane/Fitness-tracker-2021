@@ -7,7 +7,6 @@ const app = express();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-
 app.use(express.static("public"));
 
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", {
@@ -15,18 +14,18 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", {
   useFindAndModify: false
 });
 
-// routes
-app.use(require("./routes/api.js"));
 
 app.get('/exercise', (req, res) => {
-  res.sendFile(path.join(__dirname, './public/exercise.html' ))
+  res.sendFile(path.join(__dirname, '/public/exercise.html' ))
 });
 
 app.get('/stats', (req, res) => {
-  res.sendFile(path.join(__dirname, './public/stats.html' ))
+  res.sendFile(path.join(__dirname, '/public/stats.html' ))
 });
 
-app.get(require("./routes/api.js"));
+// routes
+app.use(require("./routes/page-routes"));
+app.get(require("./routes/api-routes"));
 
 app.listen(PORT, () => {
   console.log(`App running on port ${PORT}!`);
