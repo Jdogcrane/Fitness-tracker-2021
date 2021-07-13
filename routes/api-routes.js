@@ -1,36 +1,47 @@
-const router = require("express").Router();
-const mongoose = require("mongoose");
-const Workout = require("../models/workout")
+const db = require("../models/workout")
 
-router.post("/api/Workout", ({ body }, res) => {
-  Transaction.create(body)
-    .then(dbTransaction => {
-      res.json(dbTransaction);
+module.exports = function (app) {
+  // gets all info from api route objects
+  app.get("/api/workouts", (req, res) => {
+    db.Workout.find({}).then(dbWorkout => {
+      res.json(dbWorkout);
     })
-    .catch(err => {
-      res.status(400).json(err);
-    });
-});
-
-router.post("/api/Workout/bulk", ({ body }, res) => {
-  Transaction.insertMany(body)
-    .then(dbTransaction => {
-      res.json(dbTransaction);
+      .catch(err => {
+        res.status(400).json(err);
+      });
+  });
+  // gets all info from api route with range
+  app.get("/api/workouts/range", ({ }, res) => {
+    db.Workout.find({}).then((dbWorkout) => {
+      res.json(dbWorkout);
     })
-    .catch(err => {
-      res.status(400).json(err);
-    });
-});
-
-router.get("/api/Workout", (req, res) => {
-  Transaction.find({})
-    .sort({ date: -1 })
-    .then(dbTransaction => {
-      res.json(dbTransaction);
+      .catch(err => {
+        res.status(400).json(err);
+      });
+  });
+  // creates and submits workout to workouts api
+  app.post("/api/workouts/", (req, res) => {
+    db.Workout.create(req.body).then((dbWorkout) => {
+      res.json(dbWorkout);
     })
-    .catch(err => {
-      res.status(400).json(err);
-    });
-});
-
-module.exports = router;
+      .catch(err => {
+        res.status(400).json(err);
+      });
+  });
+  // Finds id of workouts and updates it with data
+  app.put("/api/workouts/:id", (req, res) => {
+    db.Workout.findByIdAndUpdate(
+      {
+        _id: req.params.id
+      },
+      {
+        exercises: req.body
+      }
+    ).then((dbWorkout) => {
+      res.json(dbWorkout);
+    })
+      .catch(err => {
+        res.status(400).json(err);
+      });
+  });
+};

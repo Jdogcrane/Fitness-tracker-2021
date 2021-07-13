@@ -13,14 +13,8 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", {
   useFindAndModify: false
 });
 
-
-app.get('/exercise', (req, res) => {
-  res.sendFile(path.join(__dirname, '/public/exercise.html' ))
-});
-
-app.get('/stats', (req, res) => {
-  res.sendFile(path.join(__dirname, '/public/stats.html' ))
-});
+require("./routes/page-routes")(app);
+require("./routes/api-routes")(app);
 
 app.listen(PORT, () => {
   console.log(`App running on port ${PORT}!`);
