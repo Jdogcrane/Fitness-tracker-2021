@@ -6,7 +6,7 @@ mongoose.connect('mongodb://localhost/workout', {
   useFindAndModify: false,
   useUnifiedTopology: true,
 });
-
+// seeds data for chart for multiple days
 const workoutSeed = [
   {
     day: new Date(new Date().setDate(new Date().getDate() - 9)),
