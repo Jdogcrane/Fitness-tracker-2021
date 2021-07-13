@@ -1,4 +1,4 @@
-const db = require("../models/workout")
+const db = require("../models/index")
 
 module.exports = function (app) {
   // gets all info from api route objects
@@ -14,8 +14,7 @@ module.exports = function (app) {
   app.get("/api/workouts/range", ({ }, res) => {
     db.Workout.find({}).then((dbWorkout) => {
       res.json(dbWorkout);
-    })
-      .catch(err => {
+    }).catch(err => {
         res.status(400).json(err);
       });
   });
@@ -29,7 +28,7 @@ module.exports = function (app) {
       });
   });
   // Finds id of workouts and updates it with data
-  app.put("/api/workouts/:id", (req, res) => {
+  app.put("/api/workout/:id", (req, res) => {
     db.Workout.findByIdAndUpdate(
       {
         _id: req.params.id
@@ -44,4 +43,5 @@ module.exports = function (app) {
         res.status(400).json(err);
       });
   });
+
 };
