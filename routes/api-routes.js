@@ -28,7 +28,7 @@ module.exports = function (app) {
       });
   });
   // Finds id of workouts and updates it with data
-  app.put("/api/workout/:id", (req, res) => {
+  app.put("/api/workouts/:id", (req, res) => {
     db.Workout.findByIdAndUpdate(
       {
         _id: req.params.id
@@ -43,5 +43,5 @@ module.exports = function (app) {
         res.status(400).json(err);
       });
   });
-
+  
 };
